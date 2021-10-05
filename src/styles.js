@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import Constants from "expo-constants";
 import { colors } from "./utils/colors";
 
 export const AppContainer = styled.View`
@@ -15,8 +16,10 @@ export const Heading = styled.Text`
 export const Header = styled.View`
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 7% 0;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+  padding-top: ${Constants.statusBarHeight}px;
+  height: 150px;
 `;
 
 export const HeaderContainer = styled.View`

@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 import { colors } from "../../utils/colors";
 
 export const ItemBox = styled.View`
-  width: 80%;
+  width: 90%;
   max-width: 400px;
 `;
 
@@ -12,7 +12,6 @@ export const RowContainer = styled.TouchableOpacity<any>`
     ${(props) => (props.selected ? "#00bcd4" : colors.lightGray)};
   border-radius: 15px;
   padding: 5px;
-  /* line-height: 1; */
   margin: 10px 0;
 `;
 

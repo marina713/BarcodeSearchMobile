@@ -22,7 +22,7 @@ export const Input = styled.TextInput`
   height: 50px;
   border: solid 4px ${colors.black};
   border-radius: 50px;
-  padding: 0 18px;
+  padding: 0 10px;
 `;
 
 export const InputContainer = styled.View<any>`

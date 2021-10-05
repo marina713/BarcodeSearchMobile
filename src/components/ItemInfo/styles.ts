@@ -17,7 +17,7 @@ export const RowContainer = styled.View`
 `;
 
 export const FirstCol = styled.View<any>`
-  width: ${(props) => (props.small ? "40px" : "80px")};
+  width: ${(props) => (props.small ? "45px" : "80px")};
   text-align: left;
   align-self: flex-start;
 `;

@@ -63,6 +63,7 @@ const Home = () => {
       } else {
         let url = `${API_ENDPOINT}product/${barcode}/?fields=code,product_name,image_url,ingredients_text,brands,categories_tags,nutrition-score-fr_100g,labels_tags,nutriments`;
         setLoading(true);
+        dispatch(setError(''));
         axios(url)
           .then((response) => {
             return handleResponse(response)

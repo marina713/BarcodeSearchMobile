@@ -4,15 +4,15 @@ import { StyleSheet, SafeAreaView } from 'react-native';
 import { createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import storage from "redux-persist/lib/storage";
 import { Provider } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Content from './src/'
 import rootReducers from "./src/state";
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: AsyncStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
