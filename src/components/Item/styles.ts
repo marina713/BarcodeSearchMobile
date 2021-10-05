@@ -22,6 +22,12 @@ export const Value = styled.Text`
   font-size: 12px;
 `;
 
+export const Title = styled.Text`
+  color: ${colors.darkBlack};
+  font-size: 23px;
+  font-weight: 600;
+`;
+
 export const ImgContainer = styled.View`
   flex-direction: column;
   padding: 10px;

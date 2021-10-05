@@ -9,6 +9,7 @@ import {
   Image,
   ImageBox,
   ErrorMessage,
+  ZoomHandle
 } from "./styles";
 import { submitSearch, setError } from "../../state/search/actions";
 import { getBarcode, getCurrentItem } from "../../state/search/selectors";
@@ -71,10 +72,11 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
             <Input
               onChangeText={(text) => { console.log({ text }); setInputText(text) }}
               value={inputText}
-              placeholder="e.g 2334561002236"
+              // placeholder="e.g 2334561002236"
               onSubmitEditing={handleSubmit}
               keyboardType="numeric"
             />
+            <ZoomHandle />
           </InputContainer>
         </RowContainer>
       </Container>

@@ -1,10 +1,9 @@
 import styled from "styled-components/native";
 import { colors } from "../../utils/colors";
-import { onHoverHighlight } from "../../utils/animations";
 
 export const Form = styled.View`
   height: 10%;
-  background-color: blueviolet;
+  margin-bottom: 30px;
 `;
 
 export const Container = styled.View``;
@@ -20,25 +19,26 @@ export const Input = styled.TextInput`
   color: ${colors.black};
   font-size: 15px;
   background: transparent;
-  width: 30px;
-  height: 30px;
-  border: solid 3px ${colors.black};
-  border-radius: 35px;
+  min-width: 40px;
+  height: 40px;
+  border: solid 4px ${colors.black};
+  border-radius: 40px;
+  padding: 0 8px;
 `;
 
 export const InputContainer = styled.View<any>`
   position: relative;
   ${(props) => (props.isLoading ? "opacity: 0.2" : null)}
+`;
 
-  &:after {
-    content: "";
-    background: ${colors.black};
-    width: 4px;
-    height: 20px;
-    position: absolute;
-    top: 27px;
-    transform: rotate(135deg);
-  }
+export const ZoomHandle = styled.View`
+  transform: rotate(135deg);
+  background: ${colors.black};
+  width: 4px;
+  height: 22px;
+  position: absolute;
+  top: 28px;
+  right: -4px;
 `;
 
 export const RowContainer = styled.View`
@@ -60,6 +60,6 @@ export const Image = styled.Image<any>`
   height: 50px;
   align-self: center;
   margin: 0 10px;
-  /* ${(props) => (props.isLoading ? "filter: invert(0.9);" : null)} */
-  ${(props) => (props.error ? "fill: orangered;" : null)}
+  ${(props) => (props.error ? "fill: orangered;" : null)}/* ${(props) =>
+    props.isLoading ? "filter: invert(0.9);" : null} */
 `;

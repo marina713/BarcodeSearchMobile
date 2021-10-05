@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from 'react-native';
-import { ItemBox, RowContainer, ImgContainer, Img } from "./styles";
+import { ItemBox, RowContainer, ImgContainer, Img, Title } from "./styles";
 import ItemInfo from "../ItemInfo";
 import Nutriments from "./Nutriments";
 import IngredientsList from "../IngredientsList";
@@ -24,7 +24,7 @@ const Item = React.memo(({ data }: Props) => {
 
       {data.code ? (
         <>
-          <Text>{data.product_name}</Text>
+          <Title>{data.product_name}</Title>
           <RowContainer>
             <ImgContainer>
               {/* {data.image_url ? (
