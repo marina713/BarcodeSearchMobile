@@ -16,9 +16,11 @@ import {
   getCurrentItem,
   getHistoricalData,
   getErrorMsg,
+  getShowBarcodeScanner,
 } from "../state/search/selectors";
 import { API_ENDPOINT } from '../constants';
 import { FlexContainer } from "./styles"
+import BarcodeScanner from "../components/BarcodeScanner";
 
 const findItemInHistory = (historicalData: ProductItem[], barcode: string) =>
   historicalData.find((item) => item.code === barcode);
@@ -31,6 +33,7 @@ const Home = () => {
   const currentItem = useSelector(getCurrentItem);
   const historicalData = useSelector(getHistoricalData);
   const errorMsg = useSelector(getErrorMsg);
+  const showBarcodeScanner = useSelector(getShowBarcodeScanner);
 
   const dispatch = useDispatch();
 
@@ -91,6 +94,7 @@ const Home = () => {
   return (
     <>
       <SearchForm loading={loading} errorMsg={errorMessage || ""} />
+      {showBarcodeScanner ? <BarcodeScanner /> : null}
       {historicalData ? (
         <FlexContainer ref={scrollRef}>
           <Item data={currentItem} />

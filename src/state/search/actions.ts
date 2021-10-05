@@ -3,6 +3,7 @@ import {
   SET_CURRENT_ITEM,
   SET_ERROR,
   ADD_TO_HISTORY,
+  SHOW_BARCODE_SCANNER,
   ProductItem,
 } from "./constants";
 
@@ -31,5 +32,11 @@ export const setError = (value: string) => {
   return {
     type: SET_ERROR,
     payload: { value },
+  };
+};
+
+export const showBarcodeScanner = () => {
+  return {
+    type: SHOW_BARCODE_SCANNER,
   };
 };

@@ -4,6 +4,7 @@ import {
   SET_CURRENT_ITEM,
   SET_ERROR,
   ADD_TO_HISTORY,
+  SHOW_BARCODE_SCANNER,
 } from "./constants";
 
 const searchReducer = (state = initialState, action: any) => {
@@ -27,6 +28,7 @@ const searchReducer = (state = initialState, action: any) => {
         currentItem: value,
         errorMsg: "",
         barcode: value.code,
+        showBarcodeScanner: false,
       };
     }
 
@@ -38,6 +40,13 @@ const searchReducer = (state = initialState, action: any) => {
         ...state,
         currentItem: {},
         errorMsg: value,
+      };
+    }
+
+    case SHOW_BARCODE_SCANNER: {
+      return {
+        ...state,
+        showBarcodeScanner: true,
       };
     }
 

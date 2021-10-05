@@ -49,6 +49,7 @@ export const RowContainer = styled.View`
 
 export const ImageBox = styled.View`
   flex-direction: column;
+  margin-right: 20px;
 `;
 
 export const ErrorMessage = styled.Text`
@@ -59,6 +60,5 @@ export const Image = styled.Image<any>`
   height: 55px;
   width: 65px;
   align-self: center;
-  margin: 0 20px;
   ${(props) => (props.isLoading ? "opacity: 0.2;" : null)}
 `;

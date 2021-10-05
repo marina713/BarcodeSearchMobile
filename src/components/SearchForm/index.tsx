@@ -14,15 +14,16 @@ import {
 import { submitSearch, setError } from "../../state/search/actions";
 import { getBarcode, getCurrentItem } from "../../state/search/selectors";
 import { useDispatch, useSelector } from "react-redux";
+import Camera from '../Camera';
 
 type Props = {
   loading: boolean,
   errorMsg: string,
 };
 
-const normaliseInput = (text: string) => text.replace(/\s/g, "");
+export const normaliseBarcode = (text: string) => text.replace(/\s/g, "");
 
-const isValidBarcode = (text: string) => !!text.match(/^\d+$/);
+export const isValidBarcode = (text: string) => !!text.match(/^\d+$/);
 
 const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
   const dispatch = useDispatch();
@@ -34,9 +35,9 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
     setInputText("");
   }, [currentItem]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = () => {
     if (!loading) {
-      const normalisedInput = normaliseInput(inputText);
+      const normalisedInput = normaliseBarcode(inputText);
       const isValid = isValidBarcode(normalisedInput);
       if (isValid) {
         dispatch(submitSearch(normalisedInput));
@@ -46,37 +47,40 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
       }
     }
   };
-  return (
-    <Form>
-      <Container>
-        <SubTitle>Insert the barcode number:</SubTitle>
-        <RowContainer>
-          <ImageBox>
-            {errorMsg ? (
-              <>
-                <Image source={require("../../assets/barcodeError.png")} />
-                <ErrorMessage>
-                  {errorMsg}
-                </ErrorMessage>
-              </>
-            ) : (
-              <Image source={require("../../assets/barcode.png")} isLoading={loading} />
-            )}
-          </ImageBox>
 
-          <InputContainer isLoading={loading}>
-            <Input
-              onChangeText={(text) => { console.log({ text }); setInputText(text) }}
-              value={inputText}
-              // placeholder="e.g 2334561002236"
-              onSubmitEditing={handleSubmit}
-              keyboardType="numeric"
-            />
-            <ZoomHandle />
-          </InputContainer>
-        </RowContainer>
-      </Container>
-    </Form>
+  return (
+    <>
+      <Form>
+        <Container>
+          <SubTitle>Insert the barcode number:</SubTitle>
+          <RowContainer>
+            <ImageBox>
+              {errorMsg ? (
+                <>
+                  <Image source={require("../../assets/barcodeError.png")} />
+                  <ErrorMessage>
+                    {errorMsg}
+                  </ErrorMessage>
+                </>
+              ) : (
+                <Image source={require("../../assets/barcode.png")} isLoading={loading} />
+              )}
+            </ImageBox>
+            <Camera />
+            <InputContainer isLoading={loading}>
+              <Input
+                onChangeText={(text) => { console.log({ text }); setInputText(text) }}
+                value={inputText}
+                // placeholder="e.g 2334561002236"
+                onSubmitEditing={handleSubmit}
+                keyboardType="numeric"
+              />
+              <ZoomHandle />
+            </InputContainer>
+          </RowContainer>
+        </Container>
+      </Form>
+    </>
   );
 });
 

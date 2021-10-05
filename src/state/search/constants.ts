@@ -13,6 +13,7 @@ export type StateProps = {
   historicalData: ProductItem[];
   currentItem: ProductItem;
   errorMsg: string;
+  showBarcodeScanner: boolean;
 };
 
 export const initialState: StateProps = {
@@ -20,9 +21,11 @@ export const initialState: StateProps = {
   historicalData: [],
   currentItem: {},
   errorMsg: "",
+  showBarcodeScanner: false,
 };
 
 export const SUBMIT_SEARCH = "search/SUBMIT_SEARCH";
 export const SET_CURRENT_ITEM = "search/SET_CURRENT_ITEM";
 export const SET_ERROR = "search/SET_ERROR";
 export const ADD_TO_HISTORY = "search/ADD_TO_HISTORY";
+export const SHOW_BARCODE_SCANNER = "/search/SHOW_BARCODE_SCANNER";
