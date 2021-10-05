@@ -1,9 +1,10 @@
 import React from "react";
+import { View, Text } from 'react-native';
 import { ItemBox, RowContainer, ImgContainer, Img } from "./styles";
 import ItemInfo from "../ItemInfo";
 import Nutriments from "./Nutriments";
 import IngredientsList from "../IngredientsList";
-import barcodeNoImg from "../../assets/barcodeNoImg.svg";
+//import barcodeNoImg from "../../assets/barcodeNoImg.svg";
 import { ProductItem } from "../../state/search/constants";
 
 type Props = {
@@ -23,16 +24,16 @@ const Item = React.memo(({ data }: Props) => {
 
       {data.code ? (
         <>
-          <h3>{data.product_name}</h3>
+          <Text>{data.product_name}</Text>
           <RowContainer>
             <ImgContainer>
-              {data.image_url ? (
+              {/* {data.image_url ? (
                 <Img src={data.image_url} alt="product" />
               ) : (
                 <Img src={barcodeNoImg} alt="no product" />
-              )}
+              )} */}
             </ImgContainer>
-            <div>
+            <View>
               {ITEM_INFO.map(item => <ItemInfo
                 key={item.label}
                 label={item.label}
@@ -47,7 +48,7 @@ const Item = React.memo(({ data }: Props) => {
                   ingredientsList={data.ingredients_text.split(",")}
                 />
               ) : null}
-            </div>
+            </View>
           </RowContainer>
         </>
       ) : null}

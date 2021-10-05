@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { useSelector } from "react-redux";
 import {
   getHistoricalData
@@ -12,7 +13,7 @@ const RecentSearches = React.memo(() => {
 
   return historicalData.length > 0 ? (
     <Container>
-      <h3>Recent searches</h3>
+      <Text>Recent searches</Text>
       <Wrapper>
         {historicalData.map((item: ProductItem) => (
           <Thumbnail data={item} key={item.code} />

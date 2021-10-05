@@ -1,4 +1,5 @@
 import React from "react";
+import { View, Text } from 'react-native';
 import { useSelector } from "react-redux";
 import { getCurrentItem } from "../../../state/search/selectors";
 import { Wrapper, NutrimentWrapper, Label } from "./styles"
@@ -24,10 +25,10 @@ const Nutriments = () => {
 
             {NUTRIMENTS.map((nutriment) => {
                 return nutriments.hasOwnProperty(nutriment.key) ?
-                    <NutrimentWrapper>
-                        <div><Label subCategory={nutriment.subCategory} small>{nutriment.label}</Label></div>
+                    <NutrimentWrapper key={`${currentItem.code}-${nutriment.key}`}>
+                        <View><Label subCategory={nutriment.subCategory} small>{nutriment.label}</Label></View>
                         {/* @ts-ignore */}
-                        <div>{`${nutriments[nutriment.key]} ${nutriments[nutriment.unit]}`}</div>
+                        <View><Text>{`${nutriments[nutriment.key]} ${nutriments[nutriment.unit]}`}</Text></View>
                     </NutrimentWrapper> : null
             })}
         </Wrapper> : null;

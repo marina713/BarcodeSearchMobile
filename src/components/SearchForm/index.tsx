@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Container,
@@ -13,8 +13,8 @@ import {
 import { submitSearch, setError } from "../../state/search/actions";
 import { getBarcode, getCurrentItem } from "../../state/search/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import barcodeImg from "../../assets/barcode.svg";
-import barcodeErrorImg from "../../assets/barcodeError.png";
+//import barcodeImg from "../../assets/barcode.svg";
+//import barcodeErrorImg from "../../assets/barcodeError.png";
 
 type Props = {
   loading: boolean,
@@ -30,22 +30,19 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
   const barcode = useSelector(getBarcode);
   const currentItem = useSelector(getCurrentItem);
   const [inputText, setInputText] = useState(barcode);
-  const inputRef = useRef<any>();
 
   useEffect(() => {
     setInputText("");
   }, [currentItem]);
 
   const handleSubmit = (e: any) => {
-    e.preventDefault();
+    console.log({ e })
     if (!loading) {
       const normalisedInput = normaliseInput(inputText);
       const isValid = isValidBarcode(normalisedInput);
       if (isValid) {
         dispatch(submitSearch(normalisedInput));
         setInputText("");
-        e.target.reset();
-        inputRef.current && inputRef.current.blur();
       } else {
         dispatch(setError("Only numbers allowed"));
       }
@@ -53,12 +50,12 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
   };
   console.log({ errorMsg })
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Container>
         <SubTitle>Insert the barcode number:</SubTitle>
         <RowContainer>
           <ImageBox>
-            {errorMsg ? (
+            {/* {errorMsg ? (
               <>
                 <Image alt={barcode} src={barcodeErrorImg} />
                 <ErrorMessage>
@@ -67,17 +64,16 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
               </>
             ) : (
               <Image alt={barcode} src={barcodeImg} isLoading={loading} />
-            )}
+            )} */}
           </ImageBox>
 
           <InputContainer isLoading={loading}>
             <Input
-              type="search"
-              onChange={(e) => setInputText(e.target.value)}
+              onChangeText={(text) => { console.log({ text }); setInputText(text) }}
               value={inputText}
-              name="search"
               placeholder="e.g 2334561002236"
-              ref={inputRef}
+              onSubmitEditing={handleSubmit}
+              keyboardType="numeric"
             />
           </InputContainer>
         </RowContainer>

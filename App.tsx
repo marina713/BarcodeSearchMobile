@@ -1,20 +1,46 @@
+import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { createStore } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import storage from "redux-persist/lib/storage";
+import { Provider } from "react-redux";
+
+import Content from './src/'
+import rootReducers from "./src/state";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducers);
+
+const store = createStore(
+  persistedReducer
+);
+const persistor = persistStore(store);
+//persistor.purge();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hola Marina!</Text>
+    <SafeAreaView style={styles.container}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Content />
+        </PersistGate>
+      </Provider>
+
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,8 +1,9 @@
 import React from "react";
+import { View } from 'react-native';
 import { ItemBox, RowContainer, ImgContainer, Img } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import ItemInfo from "../ItemInfo";
-import barcodeNoImg from "../../assets/barcodeNoImg.svg";
+//import barcodeNoImg from "../../assets/barcodeNoImg.svg";
 import { setCurrentItem } from "../../state/search/actions";
 import { ProductItem } from "../../state/search/constants";
 import { getCurrentItem } from "../../state/search/selectors";
@@ -31,18 +32,18 @@ const Thumbnail = React.memo(({ data }: Props) => {
   return (
     <ItemBox>
       <RowContainer
-        onClick={handleClick}
+        onPress={handleClick}
         selected={isSelected}
       >
         <ImgContainer>
           {data.image_url ? (
-            <Img src={data.image_url} alt="product" />
+            <Img source={{ uri: data.image_url }} />
           ) : (
-            <Img src={barcodeNoImg} alt="no product" />
+            <Img source={{ uri: barcodeNoImg }} />
           )}
         </ImgContainer>
 
-        <div>
+        <View>
           {ITEM_INFO.map(item =>
             <ItemInfo
               key={item.label}
@@ -50,7 +51,7 @@ const Thumbnail = React.memo(({ data }: Props) => {
               value={item.value}
               small
             />)}
-        </div>
+        </View>
       </RowContainer>
     </ItemBox>
 
