@@ -14,8 +14,6 @@ import {
 import { submitSearch, setError } from "../../state/search/actions";
 import { getBarcode, getCurrentItem } from "../../state/search/selectors";
 import { useDispatch, useSelector } from "react-redux";
-//import barcodeImg from "../../assets/barcode.svg";
-//import barcodeErrorImg from "../../assets/barcodeError.png";
 
 type Props = {
   loading: boolean,
@@ -37,7 +35,6 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
   }, [currentItem]);
 
   const handleSubmit = (e: any) => {
-    console.log({ e })
     if (!loading) {
       const normalisedInput = normaliseInput(inputText);
       const isValid = isValidBarcode(normalisedInput);
@@ -56,16 +53,16 @@ const SearchForm = React.memo(({ loading, errorMsg }: Props) => {
         <SubTitle>Insert the barcode number:</SubTitle>
         <RowContainer>
           <ImageBox>
-            {/* {errorMsg ? (
+            {errorMsg ? (
               <>
-                <Image alt={barcode} src={barcodeErrorImg} />
+                <Image source={require("../../assets/barcodeError.png")} />
                 <ErrorMessage>
                   {errorMsg}
                 </ErrorMessage>
               </>
             ) : (
-              <Image alt={barcode} src={barcodeImg} isLoading={loading} />
-            )} */}
+              <Image source={require("../../assets/barcode.png")} isLoading={loading} />
+            )}
           </ImageBox>
 
           <InputContainer isLoading={loading}>

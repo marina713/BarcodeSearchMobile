@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -26,7 +26,7 @@ const findItemInHistory = (historicalData: ProductItem[], barcode: string) =>
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [hasPerformedSearch, setHasPerformedSearch] = useState(false);
-
+  const scrollRef = useRef(null);
   const barcode = useSelector(getBarcode);
   const currentItem = useSelector(getCurrentItem);
   const historicalData = useSelector(getHistoricalData);
@@ -79,13 +79,21 @@ const Home = () => {
 
   const errorMessage = hasPerformedSearch && errorMsg;
 
+  const scrollToTop = useCallback(() => {
+    // @ts-ignore
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  }, [scrollRef]);
+
   return (
     <>
       <SearchForm loading={loading} errorMsg={errorMessage || ""} />
       {historicalData ? (
-        <FlexContainer>
+        <FlexContainer ref={scrollRef}>
           <Item data={currentItem} />
-          <RecentSearches />
+          <RecentSearches scrollToTop={scrollToTop} />
         </FlexContainer>
       ) : null}
     </>

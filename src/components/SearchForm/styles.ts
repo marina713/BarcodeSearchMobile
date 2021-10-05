@@ -18,17 +18,17 @@ export const SubTitle = styled.Text`
 export const Input = styled.TextInput`
   color: ${colors.black};
   font-size: 15px;
-  background: transparent;
-  min-width: 40px;
-  height: 40px;
+  min-width: 50px;
+  height: 50px;
   border: solid 4px ${colors.black};
-  border-radius: 40px;
-  padding: 0 8px;
+  border-radius: 50px;
+  padding: 0 18px;
 `;
 
 export const InputContainer = styled.View<any>`
   position: relative;
   ${(props) => (props.isLoading ? "opacity: 0.2" : null)}
+  margin-top: 2px;
 `;
 
 export const ZoomHandle = styled.View`
@@ -37,7 +37,7 @@ export const ZoomHandle = styled.View`
   width: 4px;
   height: 22px;
   position: absolute;
-  top: 28px;
+  top: 37px;
   right: -4px;
 `;
 
@@ -53,13 +53,12 @@ export const ImageBox = styled.View`
 
 export const ErrorMessage = styled.Text`
   color: indianred;
-  /* font-size: small; */
 `;
 
 export const Image = styled.Image<any>`
-  height: 50px;
+  height: 55px;
+  width: 65px;
   align-self: center;
-  margin: 0 10px;
-  ${(props) => (props.error ? "fill: orangered;" : null)}/* ${(props) =>
-    props.isLoading ? "filter: invert(0.9);" : null} */
+  margin: 0 20px;
+  ${(props) => (props.isLoading ? "opacity: 0.2;" : null)}
 `;

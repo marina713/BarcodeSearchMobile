@@ -6,17 +6,19 @@ import {
 } from "../../state/search/selectors";
 import { ProductItem } from "../../state/search/constants";
 import Thumbnail from "../Thumbnail";
-import { Wrapper, Container } from "./styles"
+import { Wrapper, Container, Title } from "./styles"
 
-const RecentSearches = React.memo(() => {
+type Props = { scrollToTop: () => void };
+
+const RecentSearches = React.memo(({ scrollToTop }: Props) => {
   const historicalData = useSelector(getHistoricalData);
 
   return historicalData.length > 0 ? (
     <Container>
-      <Text>Recent searches</Text>
+      <Title>Recent searches</Title>
       <Wrapper>
         {historicalData.map((item: ProductItem) => (
-          <Thumbnail data={item} key={item.code} />
+          <Thumbnail data={item} key={item.code} scrollToTop={scrollToTop} />
         ))}
       </Wrapper>
     </Container>

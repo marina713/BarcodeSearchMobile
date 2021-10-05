@@ -5,14 +5,26 @@ export const Label = styled.Text<any>`
   color: ${colors.lightBlack};
   font-weight: 200;
   text-align: left;
-  /* font-size: ${(props) => (props.small ? "small" : "medium")}; */
-  padding-left: ${(props) => (props.subCategory ? "15px" : null)};
+  font-size: 17px;
+  line-height: 25px;
+  padding-left: ${(props) => (props.subCategory ? "15px" : "0")};
+`;
+export const Title = styled.Text<any>`
+  color: ${colors.lightBlack};
+  font-weight: 200;
+  text-align: left;
+  font-size: 20px;
+  line-height: 33px;
+`;
+
+export const LabelValue = styled.Text<any>`
+  font-size: 17px;
 `;
 
 export const Wrapper = styled.View`
   justify-content: center;
   padding-left: 3px;
-  padding-right: 30px;
+  padding-right: 5px;
   flex-direction: column;
   margin-top: 13px;
 `;
@@ -20,7 +32,6 @@ export const Wrapper = styled.View`
 export const NutrimentWrapper = styled.View<any>`
   flex-direction: row;
   justify-content: space-between;
-  /* font-size: smaller; */
-  padding-right: 20px;
+  padding-right: 5px;
   padding-left: 5px;
 `;

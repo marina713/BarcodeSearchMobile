@@ -5,6 +5,7 @@ export const ItemBox = styled.View`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
 `;
 
 export const RowContainer = styled.View`
@@ -13,8 +14,8 @@ export const RowContainer = styled.View`
   border: 1px solid #00bcd4;
   border-radius: 15px;
   padding: 10px;
-  margin: 5px 20px;
-  /* line-height: 1.5; */
+  margin: 20px;
+  max-width: 90%;
 `;
 
 export const Value = styled.Text`
@@ -26,14 +27,12 @@ export const Title = styled.Text`
   color: ${colors.darkBlack};
   font-size: 23px;
   font-weight: 600;
+  text-align: center;
 `;
 
 export const ImgContainer = styled.View`
   flex-direction: column;
   padding: 10px;
-  justify-content: flex-start;
-  max-height: 150px;
-  max-width: 150px;
   align-self: center;
 `;
 
@@ -41,6 +40,6 @@ export const Img = styled.Image`
   border-radius: 15px;
   margin-right: 5px;
   align-self: center;
-  max-height: 150px;
-  max-width: 150px;
+  width: 140px;
+  height: 140px;
 `;

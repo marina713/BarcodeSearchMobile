@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useSelector } from "react-redux";
 import { getCurrentItem } from "../../../state/search/selectors";
-import { Wrapper, NutrimentWrapper, Label } from "./styles"
+import { Wrapper, NutrimentWrapper, Title, Label, LabelValue } from "./styles"
 
 const NUTRIMENTS = [
     { key: "energy-kcal_100g", unit: "energy-kcal_unit", label: "Energy" },
@@ -21,14 +21,14 @@ const Nutriments = () => {
 
     return nutriments ?
         <Wrapper>
-            <Label>Nutritional information (per 100g)</Label>
+            <Title>Nutritional information (per 100g)</Title>
 
             {NUTRIMENTS.map((nutriment) => {
                 return nutriments.hasOwnProperty(nutriment.key) ?
                     <NutrimentWrapper key={`${currentItem.code}-${nutriment.key}`}>
-                        <View><Label subCategory={nutriment.subCategory} small>{nutriment.label}</Label></View>
+                        <View><Label subCategory={nutriment.subCategory}>{nutriment.label}</Label></View>
                         {/* @ts-ignore */}
-                        <View><Text>{`${nutriments[nutriment.key]} ${nutriments[nutriment.unit]}`}</Text></View>
+                        <View><LabelValue>{`${nutriments[nutriment.key]} ${nutriments[nutriment.unit]}`}</LabelValue></View>
                     </NutrimentWrapper> : null
             })}
         </Wrapper> : null;

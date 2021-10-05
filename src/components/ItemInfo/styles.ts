@@ -4,31 +4,32 @@ import { colors } from "../../utils/colors";
 export const Label = styled.Text<any>`
   color: ${colors.lightBlack};
   font-weight: 200;
-  /* font-size: ${(props) => (props.small ? "x-small" : "medium")}; */
+  font-size: ${(props) => (props.small ? "15px" : "20px")};
 `;
 
 export const RowContainer = styled.View`
   justify-content: center;
   align-items: baseline;
-  /* font-size: inherit; */
   margin: 3px;
   flex-direction: row;
   width: 100%;
   justify-content: flex-start;
 `;
 
-export const Value = styled.Text<any>`
-  color: ${colors.darkBlack};
-  /* font-size: ${(props) => (props.small ? "x-small" : "medium")}; */
-`;
-
 export const FirstCol = styled.View<any>`
-  width: ${(props) => (props.small ? "30px" : "80px")};
+  width: ${(props) => (props.small ? "40px" : "80px")};
   text-align: left;
+  align-self: flex-start;
 `;
 
 export const SecondCol = styled.View<any>`
   margin-left: ${(props) => (props.small ? "1px" : "10px")};
   text-align: left;
   font-weight: 600;
+  flex-shrink: 1;
+`;
+
+export const Value = styled.Text<any>`
+  color: ${colors.darkBlack};
+  font-size: ${(props) => (props.small ? "15px" : "20px")};
 `;

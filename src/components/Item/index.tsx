@@ -4,7 +4,6 @@ import { ItemBox, RowContainer, ImgContainer, Img, Title } from "./styles";
 import ItemInfo from "../ItemInfo";
 import Nutriments from "./Nutriments";
 import IngredientsList from "../IngredientsList";
-//import barcodeNoImg from "../../assets/barcodeNoImg.svg";
 import { ProductItem } from "../../state/search/constants";
 
 type Props = {
@@ -21,17 +20,14 @@ const Item = React.memo(({ data }: Props) => {
   ]
   return (
     <ItemBox>
-
       {data.code ? (
         <>
           <Title>{data.product_name}</Title>
           <RowContainer>
             <ImgContainer>
-              {/* {data.image_url ? (
-                <Img src={data.image_url} alt="product" />
-              ) : (
-                <Img src={barcodeNoImg} alt="no product" />
-              )} */}
+              {data.image_url ? (
+                <Img source={{ uri: data.image_url }} resizeMode={'contain'} />
+              ) : null}
             </ImgContainer>
             <View>
               {ITEM_INFO.map(item => <ItemInfo
@@ -52,9 +48,7 @@ const Item = React.memo(({ data }: Props) => {
           </RowContainer>
         </>
       ) : null}
-
     </ItemBox>
-
   );
 });
 

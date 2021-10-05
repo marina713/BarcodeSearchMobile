@@ -3,26 +3,24 @@ import { View } from 'react-native';
 import { ItemBox, RowContainer, ImgContainer, Img } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import ItemInfo from "../ItemInfo";
-//import barcodeNoImg from "../../assets/barcodeNoImg.svg";
 import { setCurrentItem } from "../../state/search/actions";
 import { ProductItem } from "../../state/search/constants";
 import { getCurrentItem } from "../../state/search/selectors";
 
 type Props = {
-  data: ProductItem,
+  data: ProductItem;
+  scrollToTop: () => void
 }
 
-const Thumbnail = React.memo(({ data }: Props) => {
+const trim = (text: string) => text.length > 20 ? `${text.slice(0, 20)}...` : text;
+
+const Thumbnail = React.memo(({ data, scrollToTop }: Props) => {
   const dispatch = useDispatch();
   const currentItem = useSelector(getCurrentItem);
 
-  const handleClick = () => {
+  const onPress = () => {
     dispatch(setCurrentItem(data));
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
+    scrollToTop();
   };
   const isSelected = currentItem.code === data.code;
   const ITEM_INFO = [
@@ -32,14 +30,16 @@ const Thumbnail = React.memo(({ data }: Props) => {
   return (
     <ItemBox>
       <RowContainer
-        onPress={handleClick}
+        onPress={onPress}
         selected={isSelected}
       >
         <ImgContainer>
           {data.image_url ? (
             <Img source={{ uri: data.image_url }} />
+          ) : isSelected ? (
+            <Img source={require("../../assets/barcodeNoImg.png")} />
           ) : (
-            <Img source={{ uri: barcodeNoImg }} />
+            <Img source={require("../../assets/barcodeNoImgGrey.png")} />
           )}
         </ImgContainer>
 
@@ -48,7 +48,7 @@ const Thumbnail = React.memo(({ data }: Props) => {
             <ItemInfo
               key={item.label}
               label={item.label}
-              value={item.value}
+              value={trim(item.value || '')}
               small
             />)}
         </View>
