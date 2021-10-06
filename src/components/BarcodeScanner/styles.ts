@@ -17,6 +17,7 @@ export const Button = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 `;
+
 export const Label = styled.Text`
   font-size: 23px;
   font-weight: 700;

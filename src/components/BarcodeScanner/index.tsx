@@ -8,7 +8,7 @@ import { getShowBarcodeScanner, getErrorMsg } from "../../state/ui/selectors";
 import { Container, Button, Label } from "./styles"
 import { errorMessages } from '../../constants';
 
-type Props = {
+export type Props = {
   searchBarcode: (barcode: string) => void
 }
 
