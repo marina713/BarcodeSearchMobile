@@ -9,7 +9,7 @@ export const Label = styled.Text<any>`
   line-height: 25px;
   padding-left: ${(props) => (props.subCategory ? "15px" : "0")};
 `;
-export const Title = styled.Text<any>`
+export const Title = styled.Text`
   color: ${colors.lightBlack};
   font-weight: 200;
   text-align: left;
@@ -17,7 +17,7 @@ export const Title = styled.Text<any>`
   line-height: 33px;
 `;
 
-export const LabelValue = styled.Text<any>`
+export const LabelValue = styled.Text`
   font-size: 17px;
 `;
 
@@ -29,7 +29,7 @@ export const Wrapper = styled.View`
   margin-top: 13px;
 `;
 
-export const NutrimentWrapper = styled.View<any>`
+export const NutrimentWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   padding-right: 5px;

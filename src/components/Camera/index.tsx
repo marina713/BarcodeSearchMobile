@@ -5,14 +5,16 @@ import { getShowBarcodeScanner } from "../../state/ui/selectors";
 import { Button, CameraIcon } from "./styles";
 
 type Props = {
-    inputRef: any
+    inputRef: any;
+    scrollToTop: () => void
 }
 
-const Camera = React.memo(({ inputRef }: Props) => {
+const Camera = React.memo(({ inputRef, scrollToTop }: Props) => {
     const dispatch = useDispatch();
     const showBarcodeScanner = useSelector(getShowBarcodeScanner);
     const handlePress = () => {
         dispatch(setShowBarcodeScanner(!showBarcodeScanner));
+        scrollToTop();
         inputRef?.current?.blur();
     }
 

@@ -13,14 +13,12 @@ const productMock = {
 describe("Search #reducer", () => {
   it("returns state for `setCurrentItem` action", () => {
     const result = reducer(initialState, actions.setCurrentItem(productMock));
-    expect(result.barcode).toStrictEqual(productMock.code);
     expect(result.historicalData).toStrictEqual([]);
     expect(result.currentItem).toStrictEqual(productMock);
   });
 
   it("returns state for `addToHistory` action", () => {
     const result = reducer(initialState, actions.addToHistory(productMock));
-    expect(result.barcode).toStrictEqual("");
     expect(result.historicalData).toStrictEqual([productMock]);
     expect(result.currentItem).toStrictEqual({});
   });
@@ -30,7 +28,6 @@ describe("Search #reducer", () => {
       { ...initialState, historicalData: [productMock] },
       actions.addToHistory(productMock)
     );
-    expect(result.barcode).toStrictEqual("");
     expect(result.historicalData).toStrictEqual([productMock]);
     expect(result.currentItem).toStrictEqual({});
   });

@@ -22,7 +22,6 @@ const store = createStore(
   persistedReducer
 );
 const persistor = persistStore(store);
-// persistor.purge();
 
 export default function App() {
   return (

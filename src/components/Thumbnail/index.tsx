@@ -6,13 +6,12 @@ import ItemInfo from "../ItemInfo";
 import { setCurrentItem } from "../../state/search/actions";
 import { ProductItem } from "../../state/search/constants";
 import { getCurrentItem } from "../../state/search/selectors";
+import { trimSearch } from "../../utils/search";
 
 type Props = {
   data: ProductItem;
   scrollToTop: () => void
 }
-
-const trim = (text: string) => text.length > 20 ? `${text.slice(0, 20)}...` : text;
 
 const Thumbnail = React.memo(({ data, scrollToTop }: Props) => {
   const dispatch = useDispatch();
@@ -27,6 +26,7 @@ const Thumbnail = React.memo(({ data, scrollToTop }: Props) => {
     { label: "Name", value: data.product_name },
     { label: "Code", value: data.code },
   ]
+
   return (
     <ItemBox>
       <RowContainer
@@ -48,7 +48,7 @@ const Thumbnail = React.memo(({ data, scrollToTop }: Props) => {
             <ItemInfo
               key={item.label}
               label={item.label}
-              value={trim(item.value || '')}
+              value={trimSearch(item.value || '', 20)}
               small
             />)}
         </View>

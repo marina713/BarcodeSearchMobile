@@ -8,3 +8,6 @@ export const findItemInHistory = (
   historicalData: ProductItem[],
   barcode: string
 ) => historicalData.find((item) => item.code === barcode);
+
+export const trimSearch = (text: string, maxLength: number) =>
+  text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;

@@ -20,10 +20,14 @@ import { setError, setShowBarcodeScanner } from "../../state/ui/actions";
 import { getErrorMsg, getShowBarcodeScanner } from "../../state/ui/selectors";
 import BarcodeScanner from "../BarcodeScanner";
 import Camera from '../Camera';
-import { API_ENDPOINT } from '../../constants';
+import { API_ENDPOINT, errorMessages } from '../../constants';
 import { normaliseBarcode, isValidBarcode, findItemInHistory } from "../../utils/search"
 
-const SearchForm = React.memo(() => {
+type Props = {
+  scrollToTop: () => void
+}
+
+const SearchForm = React.memo(({ scrollToTop }: Props) => {
   const dispatch = useDispatch();
   const currentItem = useSelector(getCurrentItem);
   const showBarcodeScanner = useSelector(getShowBarcodeScanner);
@@ -41,11 +45,13 @@ const SearchForm = React.memo(() => {
     if (!loading) {
       const normalisedInput = normaliseBarcode(inputText);
       const isValid = isValidBarcode(normalisedInput);
+      scrollToTop();
+
       if (isValid) {
         setInputText("");
         searchBarcode(normalisedInput);
       } else {
-        dispatch(setError("Only numbers allowed"));
+        dispatch(setError(errorMessages.ONLY_NUMBERS));
       }
     }
   };
@@ -56,6 +62,7 @@ const SearchForm = React.memo(() => {
       dispatch(setShowBarcodeScanner(false));
     }
   }
+
   const handleResponse = useCallback(
     (response) => {
       const data = response?.data?.product;
@@ -64,7 +71,7 @@ const SearchForm = React.memo(() => {
         dispatch(setCurrentItem(data));
         dispatch(addToHistory(data));
       } else {
-        dispatch(setError("No results found"));
+        dispatch(setError(errorMessages.BARCODE_NOT_FOUND));
       }
     },
     [dispatch]
@@ -73,6 +80,8 @@ const SearchForm = React.memo(() => {
   const searchBarcode = (barcode: string) => {
     if (barcode !== "") {
       const itemInHistory = findItemInHistory(historicalData, barcode);
+      scrollToTop();
+
       if (itemInHistory) {
         dispatch(setCurrentItem(itemInHistory));
       } else {
@@ -84,7 +93,7 @@ const SearchForm = React.memo(() => {
             return handleResponse(response)
           })
           .catch((e) => {
-            const errorMessage = e?.response?.status === 404 ? "No results found" : "Network Error";
+            const errorMessage = e?.response?.status === 404 ? errorMessages.BARCODE_NOT_FOUND : errorMessages.NETWORK_ERROR;
             dispatch(setError(errorMessage));
           })
           .finally(() => setLoading(false));
@@ -113,7 +122,7 @@ const SearchForm = React.memo(() => {
                 <Image source={require("../../assets/barcode.png")} />
               )}
             </ImageBox>
-            <Camera inputRef={inputRef} />
+            <Camera inputRef={inputRef} scrollToTop={scrollToTop} />
             <InputContainer>
               <Input
                 ref={inputRef}

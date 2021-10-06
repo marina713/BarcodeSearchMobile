@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import SearchForm from "../components/SearchForm";
 import Item from "../components/Item";
@@ -16,12 +16,6 @@ const Home = () => {
   const currentItem = useSelector(getCurrentItem);
   const historicalData = useSelector(getHistoricalData);
 
-  //   const code = "3263855093192";
-  //   const code = "041164000314"; no foto
-  //   const code = "8410179012018";
-  //   const code = "8437020652940";
-  //   const code = "20425555";
-
   const scrollToTop = useCallback(() => {
     setTimeout(() => {
       // @ts-ignore
@@ -35,7 +29,7 @@ const Home = () => {
 
   return (
     <>
-      <SearchForm />
+      <SearchForm scrollToTop={scrollToTop} />
       {historicalData ? (
         <FlexContainer ref={scrollRef}>
           <Item data={currentItem} />

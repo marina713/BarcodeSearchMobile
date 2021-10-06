@@ -6,10 +6,13 @@ import { normaliseBarcode, isValidBarcode } from "../../utils/search"
 import { setError } from "../../state/ui/actions";
 import { getShowBarcodeScanner, getErrorMsg } from "../../state/ui/selectors";
 import { Container, Button, Label } from "./styles"
+import { errorMessages } from '../../constants';
 
-type Props = { searchBarcode: (barcode: string) => void }
+type Props = {
+  searchBarcode: (barcode: string) => void
+}
 
-const BarcodeScanner = ({ searchBarcode }: Props) => {
+const BarcodeScanner = React.memo(({ searchBarcode }: Props) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const dispatch = useDispatch();
@@ -31,7 +34,7 @@ const BarcodeScanner = ({ searchBarcode }: Props) => {
     if (isValid) {
       searchBarcode(normalisedBarcode);
     } else {
-      dispatch(setError("Barcode not valid"));
+      dispatch(setError(errorMessages.BARCODE_INVALID));
     }
   };
 
@@ -41,10 +44,11 @@ const BarcodeScanner = ({ searchBarcode }: Props) => {
   }
 
   if (hasPermission === false) {
-    dispatch(setError("No access to camera"));
+    dispatch(setError(errorMessages.NO_CAMERA_ACCESS));
   }
 
-  const showScanAgain = scanned && (errorMsg === "No results found" || errorMsg === "Barcode not valid");
+  const hasError = [errorMessages.BARCODE_NOT_FOUND, errorMessages.BARCODE_INVALID].includes(errorMsg);
+  const showScanAgain = scanned && hasError;
 
   return (
     <Container>
@@ -52,9 +56,13 @@ const BarcodeScanner = ({ searchBarcode }: Props) => {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {showScanAgain && (<Button onPress={handleScanAgain}><Label>Tap to Scan Again</Label></Button>)}
+      {showScanAgain && (
+        <Button onPress={handleScanAgain}>
+          <Label>Tap to Scan Again</Label>
+        </Button>
+      )}
     </Container>
   );
-}
+});
 
 export default BarcodeScanner;

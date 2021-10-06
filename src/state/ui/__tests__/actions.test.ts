@@ -30,4 +30,19 @@ describe("Ui actions", () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
+
+  describe("setShowBarcodeScanner", () => {
+    test("dispatches the correct action and payload", () => {
+      const expectedActions = [
+        {
+          ...defaultParams,
+          type: "ui/SET_SHOW_BARCODE_SCANNER",
+          payload: { value: true },
+        },
+      ];
+
+      store.dispatch(actions.setShowBarcodeScanner(true));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
 });

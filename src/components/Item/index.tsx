@@ -26,7 +26,7 @@ const Item = React.memo(({ data }: Props) => {
           <RowContainer>
             <ImgContainer>
               {data.image_url ? (
-                <Img source={{ uri: data.image_url }} resizeMode={'contain'} />
+                <Img source={{ uri: data.image_url }} resizeMode="contain" />
               ) : null}
             </ImgContainer>
             <View>
@@ -36,8 +36,7 @@ const Item = React.memo(({ data }: Props) => {
                 value={item.value}
               />)}
 
-              {data.nutriments ?
-                <Nutriments /> : null}
+              {data.nutriments ? <Nutriments /> : null}
 
               {data.ingredients_text ? (
                 <IngredientsList
