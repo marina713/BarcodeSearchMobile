@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { View } from "react-native-animatable";
 import {
   Form,
   Container,
@@ -11,28 +14,23 @@ import {
   ErrorMessage,
   ZoomHandle
 } from "./styles";
-import { submitSearch, setShowBarcodeScanner } from "../../state/search/actions";
-import { setError } from "../../state/ui/actions";
-import { getBarcode, getCurrentItem, getShowBarcodeScanner } from "../../state/search/selectors";
-import { useDispatch, useSelector } from "react-redux";
+import { setCurrentItem, addToHistory } from "../../state/search/actions";
+import { getCurrentItem, getHistoricalData } from "../../state/search/selectors";
+import { setError, setShowBarcodeScanner } from "../../state/ui/actions";
+import { getErrorMsg, getShowBarcodeScanner } from "../../state/ui/selectors";
+import BarcodeScanner from "../BarcodeScanner";
 import Camera from '../Camera';
-import { getErrorMsg } from "../../state/ui/selectors";
+import { API_ENDPOINT } from '../../constants';
+import { normaliseBarcode, isValidBarcode, findItemInHistory } from "../../utils/search"
 
-type Props = {
-  loading: boolean,
-};
-
-export const normaliseBarcode = (text: string) => text.replace(/\s/g, "");
-
-export const isValidBarcode = (text: string) => !!text.match(/^\d+$/);
-
-const SearchForm = React.memo(({ loading }: Props) => {
+const SearchForm = React.memo(() => {
   const dispatch = useDispatch();
-  const barcode = useSelector(getBarcode);
   const currentItem = useSelector(getCurrentItem);
   const showBarcodeScanner = useSelector(getShowBarcodeScanner);
   const errorMsg = useSelector(getErrorMsg);
-  const [inputText, setInputText] = useState(barcode);
+  const historicalData = useSelector(getHistoricalData);
+  const [inputText, setInputText] = useState('');
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -44,8 +42,8 @@ const SearchForm = React.memo(({ loading }: Props) => {
       const normalisedInput = normaliseBarcode(inputText);
       const isValid = isValidBarcode(normalisedInput);
       if (isValid) {
-        dispatch(submitSearch(normalisedInput));
         setInputText("");
+        searchBarcode(normalisedInput);
       } else {
         dispatch(setError("Only numbers allowed"));
       }
@@ -53,10 +51,47 @@ const SearchForm = React.memo(({ loading }: Props) => {
   };
 
   const onFocus = () => {
+    dispatch(setError(""))
     if (showBarcodeScanner) {
       dispatch(setShowBarcodeScanner(false));
     }
   }
+  const handleResponse = useCallback(
+    (response) => {
+      const data = response?.data?.product;
+
+      if (data && data.code !== "") {
+        dispatch(setCurrentItem(data));
+        dispatch(addToHistory(data));
+      } else {
+        dispatch(setError("No results found"));
+      }
+    },
+    [dispatch]
+  );
+
+  const searchBarcode = (barcode: string) => {
+    if (barcode !== "") {
+      const itemInHistory = findItemInHistory(historicalData, barcode);
+      if (itemInHistory) {
+        dispatch(setCurrentItem(itemInHistory));
+      } else {
+        let url = `${API_ENDPOINT}product/${barcode}/?fields=code,product_name,image_url,ingredients_text,brands,categories_tags,labels_tags,nutriments`;
+        setLoading(true);
+        dispatch(setError(''));
+        axios(url)
+          .then((response) => {
+            return handleResponse(response)
+          })
+          .catch((e) => {
+            const errorMessage = e?.response?.status === 404 ? "No results found" : "Network Error";
+            dispatch(setError(errorMessage));
+          })
+          .finally(() => setLoading(false));
+      }
+    }
+  }
+
 
   return (
     <>
@@ -67,7 +102,9 @@ const SearchForm = React.memo(({ loading }: Props) => {
             <ImageBox>
               {errorMsg ? (
                 <>
-                  <Image source={require("../../assets/barcodeError.png")} />
+                  <View key={errorMsg} animation={"rubberBand"} duration={1000}>
+                    <Image source={require("../../assets/barcodeError.png")} />
+                  </View>
                   <ErrorMessage>
                     {errorMsg}
                   </ErrorMessage>
@@ -92,6 +129,7 @@ const SearchForm = React.memo(({ loading }: Props) => {
           </RowContainer>
         </Container>
       </Form>
+      {showBarcodeScanner ? <BarcodeScanner searchBarcode={searchBarcode} /> : null}
     </>
   );
 });

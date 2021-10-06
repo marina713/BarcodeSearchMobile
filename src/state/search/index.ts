@@ -1,24 +1,8 @@
-import {
-  initialState,
-  SUBMIT_SEARCH,
-  SET_CURRENT_ITEM,
-  ADD_TO_HISTORY,
-  SET_SHOW_BARCODE_SCANNER,
-} from "./constants";
+import { initialState, SET_CURRENT_ITEM, ADD_TO_HISTORY } from "./constants";
 import { SET_ERROR } from "../ui/constants";
 
 const searchReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case SUBMIT_SEARCH: {
-      const {
-        payload: { value },
-      } = action;
-      return {
-        ...state,
-        barcode: value,
-      };
-    }
-
     case SET_CURRENT_ITEM: {
       const {
         payload: { value },
@@ -26,8 +10,6 @@ const searchReducer = (state = initialState, action: any) => {
       return {
         ...state,
         currentItem: value,
-        barcode: value.code,
-        showBarcodeScanner: false,
       };
     }
 
@@ -35,16 +17,6 @@ const searchReducer = (state = initialState, action: any) => {
       return {
         ...state,
         currentItem: {},
-      };
-    }
-
-    case SET_SHOW_BARCODE_SCANNER: {
-      const {
-        payload: { value },
-      } = action;
-      return {
-        ...state,
-        showBarcodeScanner: value,
       };
     }
 

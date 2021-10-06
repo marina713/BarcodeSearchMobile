@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { normaliseBarcode, isValidBarcode } from '../SearchForm'
-import { submitSearch } from "../../state/search/actions";
+import { normaliseBarcode, isValidBarcode } from "../../utils/search"
 import { setError } from "../../state/ui/actions";
-import { getShowBarcodeScanner } from "../../state/search/selectors";
-import { getErrorMsg } from "../../state/ui/selectors";
-import { Container, Button } from "./styles"
+import { getShowBarcodeScanner, getErrorMsg } from "../../state/ui/selectors";
+import { Container, Button, Label } from "./styles"
 
-const BarcodeScanner = () => {
+type Props = { searchBarcode: (barcode: string) => void }
+
+const BarcodeScanner = ({ searchBarcode }: Props) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const BarcodeScanner = () => {
     const normalisedBarcode = normaliseBarcode(data);
     const isValid = isValidBarcode(normalisedBarcode);
     if (isValid) {
-      dispatch(submitSearch(normalisedBarcode));
+      searchBarcode(normalisedBarcode);
     } else {
       dispatch(setError("Barcode not valid"));
     }
@@ -52,7 +52,7 @@ const BarcodeScanner = () => {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {showScanAgain && <Button title={'Tap to Scan Again'} onPress={handleScanAgain} />}
+      {showScanAgain && (<Button onPress={handleScanAgain}><Label>Tap to Scan Again</Label></Button>)}
     </Container>
   );
 }

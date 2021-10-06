@@ -11,13 +11,6 @@ const productMock = {
 };
 
 describe("Search #reducer", () => {
-  it("returns state for `submitSearch` action", () => {
-    const result = reducer(initialState, actions.submitSearch("987654321"));
-    expect(result.barcode).toStrictEqual("987654321");
-    expect(result.historicalData).toStrictEqual([]);
-    expect(result.currentItem).toStrictEqual({});
-  });
-
   it("returns state for `setCurrentItem` action", () => {
     const result = reducer(initialState, actions.setCurrentItem(productMock));
     expect(result.barcode).toStrictEqual(productMock.code);

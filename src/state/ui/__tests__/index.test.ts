@@ -12,14 +12,6 @@ const productMock = {
 };
 
 describe("Search #reducer", () => {
-  it("returns state for `submitSearch` action", () => {
-    const result = reducer(
-      initialState,
-      searchActions.submitSearch("987654321")
-    );
-    expect(result.errorMsg).toStrictEqual("");
-  });
-
   it("returns state for `setCurrentItem` action", () => {
     const result = reducer(
       initialState,

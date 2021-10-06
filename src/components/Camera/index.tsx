@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setShowBarcodeScanner } from "../../state/search/actions";
-import { getShowBarcodeScanner } from "../../state/search/selectors";
+import { setShowBarcodeScanner } from "../../state/ui/actions";
+import { getShowBarcodeScanner } from "../../state/ui/selectors";
 import { Button, CameraIcon } from "./styles";
 
 type Props = {

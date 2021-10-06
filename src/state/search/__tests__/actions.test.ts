@@ -24,21 +24,6 @@ describe("Search actions", () => {
     store.clearActions();
   });
 
-  describe("submitSearch", () => {
-    test("dispatches the correct action and payload", () => {
-      const expectedActions = [
-        {
-          ...defaultParams,
-          type: "search/SUBMIT_SEARCH",
-          payload: { value: "123456" },
-        },
-      ];
-
-      store.dispatch(actions.submitSearch("123456"));
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
-
   describe("setCurrentItem", () => {
     test("dispatches the correct action and payload", () => {
       const expectedActions = [

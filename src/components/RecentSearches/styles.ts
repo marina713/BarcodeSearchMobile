@@ -17,6 +17,6 @@ export const Container = styled.View`
 export const Title = styled.Text`
   color: ${colors.darkBlack};
   font-size: 23px;
-  font-weight: 500;
+  font-weight: 700;
   text-align: center;
 `;

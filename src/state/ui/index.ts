@@ -1,4 +1,4 @@
-import { initialState, SET_ERROR } from "./constants";
+import { initialState, SET_ERROR, SET_SHOW_BARCODE_SCANNER } from "./constants";
 import { SET_CURRENT_ITEM, ADD_TO_HISTORY } from "../search/constants";
 
 const uiReducer = (state = initialState, action: any) => {
@@ -8,6 +8,18 @@ const uiReducer = (state = initialState, action: any) => {
       return {
         ...state,
         errorMsg: "",
+        showBarcodeScanner: false,
+      };
+    }
+
+    case SET_SHOW_BARCODE_SCANNER: {
+      const {
+        payload: { value },
+      } = action;
+      return {
+        ...state,
+        errorMsg: "",
+        showBarcodeScanner: value,
       };
     }
 

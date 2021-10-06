@@ -13,7 +13,7 @@ import rootReducers from "./src/state";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  blacklist: ['ui']
+  whitelist: ['search']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
