@@ -68,19 +68,4 @@ describe("Search actions", () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
-
-  describe("setError", () => {
-    test("dispatches the correct action and payload", () => {
-      const expectedActions = [
-        {
-          ...defaultParams,
-          type: "search/SET_ERROR",
-          payload: { value: "Network error" },
-        },
-      ];
-
-      store.dispatch(actions.setError("Network error"));
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
 });

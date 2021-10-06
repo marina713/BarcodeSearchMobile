@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { colors } from "../../utils/colors";
 
 export const ListItem = styled.Text`
   color: whitesmoke;
@@ -9,6 +10,7 @@ export const ListItem = styled.Text`
 
 export const IngredientContainer = styled.View`
   border-radius: 15px;
-  background-color: #00bcd4;
+  background-color: ${colors.blue};
+  padding-bottom: 1px;
   margin: 2px;
 `;

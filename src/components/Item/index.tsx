@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { ItemBox, RowContainer, ImgContainer, Img, Title } from "./styles";
-import ItemInfo from "../ItemInfo";
 import Nutriments from "./Nutriments";
+import ItemInfo from "../ItemInfo";
 import IngredientsList from "../IngredientsList";
 import { ProductItem } from "../../state/search/constants";
 
@@ -16,8 +16,8 @@ const Item = React.memo(({ data }: Props) => {
     { label: "Name", value: data.product_name },
     { label: "Brand", value: data.brands },
     { label: "Code", value: data.code },
-    { label: "Score", value: data["nutrition-score-fr_100g"] },
   ]
+
   return (
     <ItemBox>
       {data.code ? (

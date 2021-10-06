@@ -5,17 +5,20 @@ export const ItemBox = styled.View`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  align-self: center;
   padding: 10px;
+  max-width: 700px;
 `;
 
 export const RowContainer = styled.View`
   flex-direction: column;
   justify-content: center;
-  border: 1px solid #00bcd4;
+  border: 1px solid ${colors.blue};
   border-radius: 15px;
   padding: 10px;
-  margin: 20px;
+  margin: 10px 20px 20px;
   max-width: 90%;
+  background-color: white;
 `;
 
 export const Value = styled.Text`
@@ -25,8 +28,8 @@ export const Value = styled.Text`
 
 export const Title = styled.Text`
   color: ${colors.darkBlack};
-  font-size: 23px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   text-align: center;
 `;
 

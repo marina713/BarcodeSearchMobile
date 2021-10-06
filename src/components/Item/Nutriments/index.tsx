@@ -15,6 +15,8 @@ const NUTRIMENTS = [
     { key: "salt_100g", unit: "salt_unit", label: "Salt" }
 ];
 
+const round = (number: number) => Math.round(number * 100) / 100
+
 const Nutriments = () => {
     const currentItem = useSelector(getCurrentItem);
     const nutriments = currentItem.nutriments;
@@ -28,7 +30,7 @@ const Nutriments = () => {
                     <NutrimentWrapper key={`${currentItem.code}-${nutriment.key}`}>
                         <View><Label subCategory={nutriment.subCategory}>{nutriment.label}</Label></View>
                         {/* @ts-ignore */}
-                        <View><LabelValue>{`${nutriments[nutriment.key]} ${nutriments[nutriment.unit]}`}</LabelValue></View>
+                        <View><LabelValue>{`${round(nutriments[nutriment.key])} ${nutriments[nutriment.unit]}`}</LabelValue></View>
                     </NutrimentWrapper> : null
             })}
         </Wrapper> : null;

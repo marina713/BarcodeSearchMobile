@@ -2,10 +2,10 @@ import {
   initialState,
   SUBMIT_SEARCH,
   SET_CURRENT_ITEM,
-  SET_ERROR,
   ADD_TO_HISTORY,
-  SHOW_BARCODE_SCANNER,
+  SET_SHOW_BARCODE_SCANNER,
 } from "./constants";
+import { SET_ERROR } from "../ui/constants";
 
 const searchReducer = (state = initialState, action: any) => {
   switch (action.type) {
@@ -26,27 +26,25 @@ const searchReducer = (state = initialState, action: any) => {
       return {
         ...state,
         currentItem: value,
-        errorMsg: "",
         barcode: value.code,
         showBarcodeScanner: false,
       };
     }
 
     case SET_ERROR: {
+      return {
+        ...state,
+        currentItem: {},
+      };
+    }
+
+    case SET_SHOW_BARCODE_SCANNER: {
       const {
         payload: { value },
       } = action;
       return {
         ...state,
-        currentItem: {},
-        errorMsg: value,
-      };
-    }
-
-    case SHOW_BARCODE_SCANNER: {
-      return {
-        ...state,
-        showBarcodeScanner: true,
+        showBarcodeScanner: value,
       };
     }
 
@@ -60,7 +58,6 @@ const searchReducer = (state = initialState, action: any) => {
       return !isInHistory
         ? {
             ...state,
-            errorMsg: "",
             historicalData: [value, ...state.historicalData].slice(0, 9),
           }
         : state;

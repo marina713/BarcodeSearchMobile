@@ -33,7 +33,7 @@ const Thumbnail = React.memo(({ data, scrollToTop }: Props) => {
         onPress={onPress}
         selected={isSelected}
       >
-        <ImgContainer>
+        <ImgContainer selected={isSelected}>
           {data.image_url ? (
             <Img source={{ uri: data.image_url }} />
           ) : isSelected ? (

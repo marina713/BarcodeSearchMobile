@@ -8,7 +8,9 @@ import { ProductItem } from "../../state/search/constants";
 import Thumbnail from "../Thumbnail";
 import { Wrapper, Container, Title } from "./styles"
 
-type Props = { scrollToTop: () => void };
+type Props = {
+  scrollToTop: () => void;
+};
 
 const RecentSearches = React.memo(({ scrollToTop }: Props) => {
   const historicalData = useSelector(getHistoricalData);

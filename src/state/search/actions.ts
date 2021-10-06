@@ -1,9 +1,8 @@
 import {
   SUBMIT_SEARCH,
   SET_CURRENT_ITEM,
-  SET_ERROR,
   ADD_TO_HISTORY,
-  SHOW_BARCODE_SCANNER,
+  SET_SHOW_BARCODE_SCANNER,
   ProductItem,
 } from "./constants";
 
@@ -28,15 +27,9 @@ export const addToHistory = (value: ProductItem) => {
   };
 };
 
-export const setError = (value: string) => {
+export const setShowBarcodeScanner = (value: boolean) => {
   return {
-    type: SET_ERROR,
+    type: SET_SHOW_BARCODE_SCANNER,
     payload: { value },
-  };
-};
-
-export const showBarcodeScanner = () => {
-  return {
-    type: SHOW_BARCODE_SCANNER,
   };
 };

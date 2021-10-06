@@ -8,16 +8,16 @@ import RecentSearches from "../components/RecentSearches";
 import {
   setCurrentItem,
   addToHistory,
-  setError,
 } from "../state/search/actions";
+import { setError } from "../state/ui/actions";
 import { ProductItem } from "../state/search/constants";
 import {
   getBarcode,
   getCurrentItem,
   getHistoricalData,
-  getErrorMsg,
   getShowBarcodeScanner,
 } from "../state/search/selectors";
+import { getErrorMsg } from "../state/ui/selectors";
 import { API_ENDPOINT } from '../constants';
 import { FlexContainer } from "./styles"
 import BarcodeScanner from "../components/BarcodeScanner";
@@ -27,7 +27,6 @@ const findItemInHistory = (historicalData: ProductItem[], barcode: string) =>
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
-  const [hasPerformedSearch, setHasPerformedSearch] = useState(false);
   const scrollRef = useRef(null);
   const barcode = useSelector(getBarcode);
   const currentItem = useSelector(getCurrentItem);
@@ -45,7 +44,6 @@ const Home = () => {
 
   const handleResponse = useCallback(
     (response) => {
-      setHasPerformedSearch(true);
       const data = response?.data?.product;
 
       if (data && data.code !== "") {
@@ -64,7 +62,7 @@ const Home = () => {
       if (itemInHistory) {
         dispatch(setCurrentItem(itemInHistory));
       } else {
-        let url = `${API_ENDPOINT}product/${barcode}/?fields=code,product_name,image_url,ingredients_text,brands,categories_tags,nutrition-score-fr_100g,labels_tags,nutriments`;
+        let url = `${API_ENDPOINT}product/${barcode}/?fields=code,product_name,image_url,ingredients_text,brands,categories_tags,labels_tags,nutriments`;
         setLoading(true);
         dispatch(setError(''));
         axios(url)
@@ -73,7 +71,6 @@ const Home = () => {
           })
           .catch((e) => {
             const errorMessage = e?.response?.status === 404 ? "No results found" : "Network Error";
-            setHasPerformedSearch(true);
             dispatch(setError(errorMessage));
           })
           .finally(() => setLoading(false));
@@ -81,19 +78,21 @@ const Home = () => {
     }
   }, [barcode, historicalData, dispatch, handleResponse]);
 
-  const errorMessage = hasPerformedSearch && errorMsg;
 
   const scrollToTop = useCallback(() => {
-    // @ts-ignore
-    scrollRef.current?.scrollTo({
-      y: 0,
-      animated: true,
-    });
+    setTimeout(() => {
+      // @ts-ignore
+      scrollRef.current?.scrollTo({
+        y: 0,
+        animated: true,
+      });
+    }, 0);
+
   }, [scrollRef]);
 
   return (
     <>
-      <SearchForm loading={loading} errorMsg={errorMessage || ""} />
+      <SearchForm loading={loading} />
       {showBarcodeScanner ? <BarcodeScanner /> : null}
       {historicalData ? (
         <FlexContainer ref={scrollRef}>

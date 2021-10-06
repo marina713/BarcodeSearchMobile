@@ -16,8 +16,6 @@ export const getCurrentItem = createSelector(
   (data) => data.currentItem
 );
 
-export const getErrorMsg = createSelector(getSearch, (data) => data.errorMsg);
-
 export const getShowBarcodeScanner = createSelector(
   getSearch,
   (data) => data.showBarcodeScanner

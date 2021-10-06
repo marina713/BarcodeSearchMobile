@@ -13,6 +13,7 @@ import rootReducers from "./src/state";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
+  blacklist: ['ui']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
@@ -21,7 +22,7 @@ const store = createStore(
   persistedReducer
 );
 const persistor = persistStore(store);
-//persistor.purge();
+// persistor.purge();
 
 export default function App() {
   return (
@@ -31,7 +32,6 @@ export default function App() {
           <Content />
         </PersistGate>
       </Provider>
-
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -40,7 +40,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f7f7f7',
     alignItems: 'center',
     justifyContent: 'center',
   },

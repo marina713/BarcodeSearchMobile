@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { normaliseBarcode, isValidBarcode } from '../SearchForm'
-import { submitSearch, setError } from "../../state/search/actions";
-import {
-  getShowBarcodeScanner,
-} from "../../state/search/selectors";
-import { Container } from "./styles"
+import { submitSearch } from "../../state/search/actions";
+import { setError } from "../../state/ui/actions";
+import { getShowBarcodeScanner } from "../../state/search/selectors";
+import { getErrorMsg } from "../../state/ui/selectors";
+import { Container, Button } from "./styles"
 
 const BarcodeScanner = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const dispatch = useDispatch();
   const showBarcodeScanner = useSelector(getShowBarcodeScanner);
+  const errorMsg = useSelector(getErrorMsg);
 
   useEffect(() => {
     (async () => {
@@ -24,7 +25,7 @@ const BarcodeScanner = () => {
   }, [showBarcodeScanner]);
 
   const handleBarCodeScanned = ({ data }: { data: string }) => {
-    setScanned(true)
+    setScanned(true);
     const normalisedBarcode = normaliseBarcode(data);
     const isValid = isValidBarcode(normalisedBarcode);
     if (isValid) {
@@ -34,12 +35,16 @@ const BarcodeScanner = () => {
     }
   };
 
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+  const handleScanAgain = () => {
+    setScanned(false);
+    dispatch(setError(""));
   }
+
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    dispatch(setError("No access to camera"));
   }
+
+  const showScanAgain = scanned && (errorMsg === "No results found" || errorMsg === "Barcode not valid");
 
   return (
     <Container>
@@ -47,7 +52,7 @@ const BarcodeScanner = () => {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      {showScanAgain && <Button title={'Tap to Scan Again'} onPress={handleScanAgain} />}
     </Container>
   );
 }

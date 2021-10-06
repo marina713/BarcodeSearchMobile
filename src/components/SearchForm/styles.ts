@@ -2,8 +2,7 @@ import styled from "styled-components/native";
 import { colors } from "../../utils/colors";
 
 export const Form = styled.View`
-  height: 10%;
-  margin-bottom: 30px;
+  padding-bottom: 20px;
 `;
 
 export const Container = styled.View``;
@@ -25,9 +24,8 @@ export const Input = styled.TextInput`
   padding: 0 10px;
 `;
 
-export const InputContainer = styled.View<any>`
+export const InputContainer = styled.View`
   position: relative;
-  ${(props) => (props.isLoading ? "opacity: 0.2" : null)}
   margin-top: 2px;
 `;
 
@@ -41,10 +39,11 @@ export const ZoomHandle = styled.View`
   right: -4px;
 `;
 
-export const RowContainer = styled.View`
+export const RowContainer = styled.View<any>`
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  ${(props) => (props.isLoading ? "opacity: 0.2" : null)}
 `;
 
 export const ImageBox = styled.View`
@@ -56,9 +55,8 @@ export const ErrorMessage = styled.Text`
   color: indianred;
 `;
 
-export const Image = styled.Image<any>`
+export const Image = styled.Image`
   height: 55px;
   width: 65px;
   align-self: center;
-  ${(props) => (props.isLoading ? "opacity: 0.2;" : null)}
 `;
